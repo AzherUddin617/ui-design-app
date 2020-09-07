@@ -1,0 +1,30 @@
+@import '../../global/variables.scss';
+
+.Toolbar {
+  width: 100%;
+  height: 100%;
+  background-color: $colorWhite;
+  padding: 1rem 0.5rem;
+  border-radius: 0.3rem;
+  box-shadow: 0.05rem 0.05rem 0.5rem rgba($colorBlack, 0.05);
+
+  .ToolItems {
+    padding: 1rem 0;
+
+    .ToolItem {
+      padding: 0.3rem 0;
+      font-size: 1.5rem;
+      color: $colorDark;
+      opacity: 0.8;
+      cursor: pointer;
+      transition-property: opacity, color;
+      transition-timing-function: ease;
+      transition-duration: 0.4s;
+
+      &:hover {
+        opacity: 1;
+        color: $colorPrimary;
+      }
+    }
+  }
+}

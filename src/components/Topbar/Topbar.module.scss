@@ -1,0 +1,12 @@
+@import '../../global/variables.scss';
+
+.Topbar {
+  padding: 0.5rem 1rem;
+  background-color: $colorWhite;
+  border-radius: 0.4rem;
+  box-shadow: 0.05rem 0.05rem 0.5rem rgba($colorBlack, 0.05);
+
+  .Logo {
+    color: $colorPrimary;
+  }
+}
