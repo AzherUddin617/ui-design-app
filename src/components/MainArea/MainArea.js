@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useRef, useCallback } from 'react';
+import React, { Component } from 'react';
 import classes from './MainArea.module.scss';
 
 class MainArea extends Component {
@@ -109,78 +109,6 @@ class MainArea extends Component {
       </div>
     );
   }
-}
-
-const MainArea2 = () => {
-  const mainAreaRef = useRef();
-  const [drawData, setDrawData] = useState({ x: null, y: null, width: null, height: null });
-  const [mouseStart, setMouseStart] = useState({ x: null, y: null });
-  const [mouseEnd, setMouseEnd] = useState({ x: null, y: null });
-  
-  const mouseMoveHandler = useCallback(e => {
-    console.log('move');
-    const mouseEnd = {
-      x: e.offsetX,
-      y: e.offsetY
-    };
-    setMouseEnd(mouseEnd);
-  }, []);
-
-  const mouseUpHandler = useCallback(e => {
-    console.log('up');
-    const drawData = {
-      x: mouseStart.x,
-      y: mouseStart.y,
-      width: mouseEnd.x - mouseStart.y,
-      height: mouseEnd.y - mouseStart.y
-    };
-    setDrawData(drawData);
-
-    if (mainAreaRef.current) {
-      const body = mainAreaRef.current;
-
-      body.removeEventListener('mouseup', mouseUpHandler);
-      body.removeEventListener('mousemove', mouseMoveHandler);
-    }
-  }, [mouseMoveHandler, mouseStart, mouseEnd]);
-  
-  const mouseDownHandler = useCallback(e => {
-      console.log('down');
-      const mouseStart = {
-        x: e.offsetX,
-        y: e.offsetY
-      };
-      setMouseStart(mouseStart);
-
-      if (mainAreaRef.current) {
-        const body = mainAreaRef.current;
-
-        body.addEventListener('mouseup', mouseUpHandler);
-        body.addEventListener('mousemove', mouseMoveHandler);
-      }
-  }, [mouseUpHandler, mouseMoveHandler]);
-  
-
-  useEffect(() => {
-    const mainBody = mainAreaRef.current;
-    if (mainBody) {
-      // console.log(mainAreaRef.current.getBoundingClientRect());
-
-      mainBody.addEventListener('mousedown', mouseDownHandler);
-    }
-
-    return () => {
-      if (mainBody) {
-        mainBody.removeEventListener('mousedown', mouseDownHandler);
-      }
-    }
-  }, [mouseDownHandler]);
-
-  return (
-    <div className={classes.MainArea} ref={mainAreaRef}>
-      {drawData.x} {drawData.y} {drawData.width} {drawData.width}
-    </div>
-  );
 }
 
 export default MainArea;
