@@ -21,6 +21,7 @@
       transition-timing-function: ease;
       transition-duration: 0.4s;
 
+      &.Active,
       &:hover {
         opacity: 1;
         color: $colorPrimary;

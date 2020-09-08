@@ -2,5 +2,6 @@
 
 .DrawItem {
   position: absolute;
-  border: 1px solid $colorBlack;
+  border: 1px solid $colorDark;
+  background-color: $colorSecondary;
 }

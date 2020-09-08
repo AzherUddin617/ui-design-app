@@ -1,19 +1,21 @@
 import React from 'react';
 import classes from './Toolbar.module.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSlash } from '@fortawesome/free-solid-svg-icons';
-import { faMousePointer } from '@fortawesome/free-solid-svg-icons';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-
-const Toolbar = () => {
+const Toolbar = ({ tools, setActive }) => {
   return (
     <div className={classes.Toolbar}>
       <div className={classes.ToolItems}>
-        <div className={classes.ToolItem}>
+        {tools.map(tool => {
+          const itemClasses = [classes.ToolItem];
+          if (tool.active) itemClasses.push(classes.Active);
+          return (
+            <div key={tool.name} className={itemClasses.join(' ')} onClick={() => setActive(tool)}>
+              {tool.icon}
+            </div>
+          )
+        })}
+
+        {/* <div className={classes.ToolItem}>
           <FontAwesomeIcon icon={faMousePointer} color="inherit" fontSize="inherit" transform="right-2" />
         </div>
         <div className={classes.ToolItem}>
@@ -30,7 +32,7 @@ const Toolbar = () => {
         </div>
         <div className={classes.ToolItem}>
           <FontAwesomeIcon icon={faImage} color="inherit" fontSize="inherit" />
-        </div>
+        </div> */}
       </div>
     </div>
   );
