@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import classes from './MainArea.module.scss';
+import DrawItem from './DrawItem/DrawItem';
 
 class MainArea extends Component {
   
   constructor(props) {
     super(props);
+
+    this.createLayout = ({ name, elements, active }) => ({
+      active: active && true,
+      name: name || 'Layer ' + (this.state ? this.state.drawLayers.lenght : '1'),
+      elements: elements || []
+    });
+
     this.state = {
       drawData: null,
-      drawElements: []
+      drawElements: [],
+      drawLayers: [this.createLayout({ active: true })],
+      activeLayerIndex: 0
     };
+    console.log(this.state.drawLayers);
 
     this.mainAreaRef = React.createRef();
     this.mouseStart = { x:null, y:null };
@@ -25,12 +36,19 @@ class MainArea extends Component {
     }
   }
 
+  addElement = elem => {
+    const drawLayers = [...this.state.drawLayers];
+    const activeLayer = {...drawLayers[this.state.activeLayerIndex]};
+    activeLayer.elements = activeLayer.elements.concat(elem);
+    drawLayers[this.state.activeLayerIndex] = activeLayer;
+    this.setState({ drawLayers: drawLayers, drawData: null });
+  }
+
   mouseDownHandler = e => {
     e.preventDefault();
     console.log('down');
       this.mouseStart.x = e.pageX - this.offsetLeft;
       this.mouseStart.y = e.pageY - this.offsetTop;
-      // setMouseStart(mouseStart);
       
       if (this.mainAreaRef.current) {
         const body = this.mainAreaRef.current;
@@ -58,12 +76,7 @@ class MainArea extends Component {
       drawData.width = e.pageX - this.offsetLeft - this.mouseStart.x;
       drawData.height = e.pageY - this.offsetTop - this.mouseStart.y;
 
-      this.setState((prevState) => {
-        return {
-          drawElements: prevState.drawElements.concat(drawData),
-          drawData: null
-        };
-      });
+      this.addElement(drawData);
     }
   }
   mouseMoveHandler = e => {
@@ -84,26 +97,21 @@ class MainArea extends Component {
     return (
       <div className={classes.MainArea} ref={this.mainAreaRef}>
         <div className={classes.DrawArea}>
-          {this.state.drawElements.map((elem, i) => (
-            <div
-              key={i}
-              className={classes.DrawItem}
-              style={{
-                left: elem.x + 'px',
-                top: elem.y + 'px',
-                width: elem.width + 'px',
-                height: elem.height + 'px'
-              }}
-            ></div>
+          {this.state.drawLayers.map((layer, i) => (
+            <div key={i} className={classes.DrawLayer}>
+              {layer.elements.map((elem, i) => (
+                <DrawItem key={i} x={elem.x} y={elem.y} width={elem.width} height={elem.height} />
+              ))}
+            </div>
           ))}
 
           { this.state.drawData &&
-            <div className={classes.DrawItem} style={{
-              left: this.state.drawData.x + 'px',
-              top: this.state.drawData.y + 'px',
-              width: this.state.drawData.width + 'px',
-              height: this.state.drawData.height + 'px'
-            }}></div>
+            <DrawItem 
+              x={this.state.drawData.x} 
+              y={this.state.drawData.y} 
+              width={this.state.drawData.width} 
+              height={this.state.drawData.height} 
+            />
           }
         </div>
       </div>

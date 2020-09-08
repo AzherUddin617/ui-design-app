@@ -4,9 +4,9 @@ import classes from './Toolbar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlash } from '@fortawesome/free-solid-svg-icons';
 import { faMousePointer } from '@fortawesome/free-solid-svg-icons';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 
 const Toolbar = () => {
@@ -29,7 +29,7 @@ const Toolbar = () => {
           <TextFieldsIcon color="inherit" fontSize="inherit" />
         </div>
         <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faImages} color="inherit" fontSize="inherit" />
+          <FontAwesomeIcon icon={faImage} color="inherit" fontSize="inherit" />
         </div>
       </div>
     </div>
