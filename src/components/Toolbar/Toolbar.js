@@ -14,25 +14,6 @@ const Toolbar = ({ tools, setActive }) => {
             </div>
           )
         })}
-
-        {/* <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faMousePointer} color="inherit" fontSize="inherit" transform="right-2" />
-        </div>
-        <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faSquare} color="inherit" fontSize="inherit" />
-        </div>
-        <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faCircle} color="inherit" fontSize="inherit" />
-        </div>
-        <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faSlash} color="inherit" fontSize="inherit" transform="shrink-4 left-2" />
-        </div>
-        <div className={classes.ToolItem}>
-          <TextFieldsIcon color="inherit" fontSize="inherit" />
-        </div>
-        <div className={classes.ToolItem}>
-          <FontAwesomeIcon icon={faImage} color="inherit" fontSize="inherit" />
-        </div> */}
       </div>
     </div>
   );

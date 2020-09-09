@@ -4,4 +4,37 @@
   position: absolute;
   border: 1px solid $colorDark;
   background-color: $colorSecondary;
+
+  &.Line {
+    transform-origin: 0 0;
+    background-color: $colorBlack;
+    border: none;
+  }
+  &.Text {
+    color: $colorBlack;
+    font-size: 1.4rem;
+    background: none;
+    border: 1px dotted $colorDark;
+
+    .TypeBar {
+      display: inline-block;
+      margin-left: 1px;
+      color: $colorBlack;
+      animation: typeBarAnim 1s ease infinite;
+      animation-delay: 0.5s;
+      transform: translateY(-5%) scaleY(1.1);
+    }
+  }
+}
+
+@keyframes typeBarAnim {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+  }
 }

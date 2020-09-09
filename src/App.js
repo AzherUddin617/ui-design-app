@@ -47,6 +47,15 @@ function App() {
     }
   ]);
 
+  const setTextHandler = (setText, textRef) => {
+    console.log(textRef)
+    const textInputClosed = (e) => {
+      console.log(e.target, textRef);
+    }
+
+    window.addEventListener('click', textInputClosed);
+  }
+
   const setActiveTool = activeTool => {
     const updatedTools = tools.map(tool => {
       const uTool = {...tool};
