@@ -1,0 +1,88 @@
+@import '../../global/variables.scss';
+
+.EditorArea {
+  width: 100%;
+  height: 100%;
+  background-color: $colorWhite;
+  padding: 1rem 0.5rem;
+  border-radius: 0.3rem;
+  box-shadow: 0.05rem 0.05rem 0.5rem rgba($colorBlack, 0.05);
+
+  .Editors {
+    width: 20vw;
+    min-width: 160px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .Options {
+
+      .Rect {
+        display: flex;
+        padding: 0.5rem 0;
+
+        .RectItem {
+          flex: 0.5;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-right: 0.5rem;
+
+          .RectName {
+            color: $colorBlack;
+            font-weight: 500;
+          }
+          .RectInput {
+            display: inline-block;
+            width: 100%;
+            max-width: 3rem;
+            padding: 0.2rem;
+          }
+        }
+      }
+      .Theme {
+        padding: 1rem 0.2rem;
+        margin: 0.5rem 0;
+        border: 0.1rem solid #ccc;
+
+        .Title {
+          font-weight: 500;
+          text-decoration: underline;
+          padding-bottom: 0.5rem;
+          color: $colorBlack;
+        }
+
+        .Size {
+          display: flex;
+          align-items: center;
+          // justify-content: space-between;
+          padding-bottom: 0.5rem;
+
+          .Name {
+            font-weight: 500;
+            padding-right: 1rem;
+            color: $colorBlack;
+          }
+          .Input {
+            width: 100%;
+            max-width: 4rem;
+          }
+        }
+        .Color {
+          display: flex;
+          align-items: center;
+
+          p {
+            color: $colorBlack;
+            font-weight: 500;
+            padding-right: 1rem;
+          }
+          .ColorInput {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

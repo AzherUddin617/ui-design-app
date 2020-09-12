@@ -67,6 +67,20 @@ const DrawItem = ({ toolName, elem, classeName, style }) => {
         >{elem.textValue}{elem.drawing && <span className={classes.TypeBar}>|</span>}</div>
       );
       break;
+    case toolNames.IMAGE:
+      drawItem = (
+        <div className={[classes.DrawItem, classes.Image, classeName].join(' ')} style={{
+            left: left + 'px',
+            top: top + 'px',
+            width: width + 'px',
+            height: height + 'px',
+            borderColor: elem.drawing ? `#ccc` : 'transparent',
+            backgroundImage: `url(${elem.src})`,
+            ...style
+          }}
+        ></div>
+      );
+      break;
     default:
       break;
   }
