@@ -27,7 +27,7 @@ class App extends Component {
       elements: elements || []
     });
 
-    this.state = {
+    const state = {
       tools: [
         {
           name: toolNames.POINTER,
@@ -37,22 +37,50 @@ class App extends Component {
         {
           name: toolNames.RECTANGLE,
           icon: <FontAwesomeIcon icon={faSquare} color="inherit" fontSize="inherit" />,
-          active: false
+          active: false,
+          options: {
+            radius: 0,
+            fillColor: 'transparent',
+            stroke: {
+              width: 1,
+              color: '#000000'
+            }
+          }
         },
         {
           name: toolNames.CIRCLE,
           icon: <FontAwesomeIcon icon={faCircle} color="inherit" fontSize="inherit" />,
-          active: false
+          active: false,
+          options: {
+            fillColor: 'transparent',
+            stroke: {
+              width: 1,
+              color: '#000000'
+            }
+          }
         },
         {
           name: toolNames.LINE,
           icon: <FontAwesomeIcon icon={faSlash} color="inherit" fontSize="inherit" transform="shrink-4 left-2" />,
-          active: false
+          active: false,
+          options: {
+            stroke: {
+              width: 1,
+              color: '#000000'
+            }
+          }
         },
         {
           name: toolNames.TEXT,
           icon: <TextFieldsIcon color="inherit" fontSize="inherit" />,
-          active: false
+          active: false,
+          options: {
+            fillColor: 'transparent',
+            stroke: {
+              width: 0,
+              color: 'transparent'
+            }
+          }
         },
         {
           name: toolNames.IMAGE,
@@ -63,9 +91,11 @@ class App extends Component {
       drawData: null,
       drawLayers: [this.createLayout({ active: true })],
       activeLayerIndex: 0,
-      activeToolName: toolNames.POINTER,
+      activeTool: null,
       imageInput: null
     };
+    state.activeTool = state.tools[0];
+    this.state = state;
 
     this.mainAreaRef = React.createRef();
     this.mouseStart = { x:null, y:null };
@@ -88,25 +118,42 @@ class App extends Component {
 
   setActiveTool = activeTool => { 
     this.setState(prevState => {
-      let activeToolName = '';
+      let newActiveTool = prevState.activeTool;
       const updatedTools = prevState.tools.map(tool => {
         const uTool = {...tool};
         if (tool === activeTool) {
           uTool.active = true;
-          activeToolName = tool.name;
+          newActiveTool = tool;
         } else {
           uTool.active = false;
         }
         return uTool;
       });
 
-      return { tools: updatedTools, activeToolName: activeToolName };
+      return { tools: updatedTools, activeTool: newActiveTool };
+    });
+  };
+
+  updateActiveTool = (newOptions) => {
+    this.setState(prevState => {
+      let newActiveTool = prevState.activeTool;
+      const updatedTools = prevState.tools.map(tool => {
+        const uTool = {...tool};
+        if (tool.name === newActiveTool.name) {
+          uTool.options = newOptions;
+          newActiveTool = uTool;
+        }
+        return uTool;
+      });
+
+      return { tools: updatedTools, activeTool: newActiveTool };
     });
   }
 
   addElement = elem => {
     this.setState(prevState => {
-      elem.toolName = prevState.activeToolName;
+      elem.toolName = prevState.activeTool.name;
+      elem.options = prevState.activeTool.options;
       elem.drawing = false;
       const drawLayers = [...prevState.drawLayers];
       const activeLayer = {...drawLayers[prevState.activeLayerIndex]};
@@ -150,13 +197,13 @@ class App extends Component {
       drawData.x2 = e.pageX - this.offsetLeft;
       drawData.y2 = e.pageY - this.offsetTop;
 
-      if (this.state.activeToolName === toolNames.TEXT) {
+      if (this.state.activeTool.name === toolNames.TEXT) {
         this.changeTextHandler(drawData).then(data => {
           drawData.textValue = data;
           this.addElement(drawData);
         })
       }
-      else if (this.state.activeToolName === toolNames.IMAGE) {
+      else if (this.state.activeTool.name === toolNames.IMAGE) {
         this.imageAddHandler().then(src => {
           drawData.src = src;
           this.addElement(drawData);
@@ -268,12 +315,12 @@ class App extends Component {
         </div>
         <div className={classes.MainArea}>
           <MainArea 
-            activeToolName={this.state.activeToolName} 
+            activeTool={this.state.activeTool} 
             drawLayers={this.state.drawLayers} drawData={this.state.drawData}
             ref={this.mainAreaRef} />
         </div>
         <div className={classes.EditorArea}>
-          <EditorArea />
+          <EditorArea activeTool={this.state.activeTool} updateTool={this.updateActiveTool} />
         </div>
       </div>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './DrawItem.module.scss';
 import * as toolNames from '../../../global/tool-names';
 
-const DrawItem = ({ toolName, elem, classeName, style }) => {
+const DrawItem = ({ toolName, elem, options, classeName, style }) => {
   const left = Math.min(elem.x1, elem.x2);
   const top = Math.min(elem.y1, elem.y2);
   const width = Math.abs(elem.x1 - elem.x2);
@@ -19,10 +19,13 @@ const DrawItem = ({ toolName, elem, classeName, style }) => {
       
       drawItem = (
         <div className={[classes.DrawItem, classeName].join(' ')} style={{
-            left: left + 'px',
-            top: top + 'px',
-            width: width + 'px',
-            height: height + 'px',
+            left: left,
+            top: top,
+            width: width,
+            height: height,
+            borderWidth: options ? options.stroke.width : 1,
+            borderColor: options ? options.stroke.color : '#000',
+            backgroundColor: options ? options.fillColor : 'transparent',
             ...style
           }}
         ></div>
@@ -31,11 +34,14 @@ const DrawItem = ({ toolName, elem, classeName, style }) => {
     case toolNames.CIRCLE:
       drawItem = (
         <div className={[classes.DrawItem, classeName].join(' ')} style={{
-            left: left + 'px',
-            top: top + 'px',
-            width: width + 'px',
-            height: height + 'px',
+            left: left,
+            top: top,
+            width: width,
+            height: height,
             borderRadius: '50%',
+            borderWidth: options ? options.stroke.width : 1,
+            borderColor: options ? options.stroke.color : 'transparent',
+            backgroundColor: options ? options.fillColor : 'transparent',
             ...style
           }}
         ></div>
@@ -44,11 +50,12 @@ const DrawItem = ({ toolName, elem, classeName, style }) => {
     case toolNames.LINE:
       drawItem = (
         <div className={[classes.DrawItem, classes.Line, classeName].join(' ')} style={{
-            left: elem.x1 + 'px',
-            top: elem.y1 + 'px',
-            width: dis + 'px',
-            height: 2 + 'px',
+            left: elem.x1,
+            top: elem.y1,
+            width: dis,
+            height: options ? options.stroke.width : 1,
             transform: `rotate(${rotate}rad)`,
+            backgroundColor: options ? options.stroke.color : 'transparent',
             ...style
           }}
         ></div>

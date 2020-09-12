@@ -12,13 +12,15 @@ const MainArea = React.forwardRef((props, ref) =>  (
                 <DrawItem key={i} 
                   toolName={elem.toolName} 
                   elem={elem}
+                  options={elem.options}
                 />
               ))}
 
               { layer.active && props.drawData &&
                 <DrawItem 
-                  toolName={props.activeToolName}
+                  toolName={props.activeTool.name}
                   elem={props.drawData}
+                  options={props.activeTool.options}
                 />
               }
             </div>
