@@ -43,7 +43,7 @@ class App extends Component {
             fillColor: 'transparent',
             stroke: {
               width: 1,
-              color: '#000000'
+              color: 'black'
             }
           }
         },
@@ -55,7 +55,7 @@ class App extends Component {
             fillColor: 'transparent',
             stroke: {
               width: 1,
-              color: '#000000'
+              color: 'black'
             }
           }
         },
@@ -66,7 +66,7 @@ class App extends Component {
           options: {
             stroke: {
               width: 1,
-              color: '#000000'
+              color: 'black'
             }
           }
         },
